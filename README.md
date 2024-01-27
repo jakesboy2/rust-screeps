@@ -29,8 +29,17 @@ cd screeps-starter-rust
 # Copy the example config, and set up at least one deployment mode.
 # Configure credentials if you'd like to upload directly, or a directory to copy to
 # if you'd prefer to use the game client to deploy:
+# Add branch = "main" to the screeps.toml file
 cp example-screeps.toml screeps.toml
 nano screeps.toml
+
+# Switch to nightly build
+rustup toolchain install nightly-2024-01-20
+rustup override set nightly-2024-01-20
+rustup component add rust-src --toolchain nightly-2024-01-20-x86_64-pc-windows-msvc
+
+# Test build
+cargo screeps build
 
 # Compile plus deploy to the configured 'upload' mode; any section name you
 # set up in your screeps.toml for different environments and servers can be used
