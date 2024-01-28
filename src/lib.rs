@@ -14,6 +14,7 @@ use screeps::{
 use wasm_bindgen::{prelude::*, JsCast};
 
 mod logging;
+mod room_visuals;
 
 thread_local! {
     static CREEP_TARGETS: RefCell<HashMap<String, CreepTarget>> = RefCell::new(HashMap::new());
@@ -45,6 +46,11 @@ pub fn game_loop() {
     if game::time() % 1000 == 0 {
       clean_memory()
     }
+
+    for room in game::rooms().values() {
+        room_visuals::draw_room(&room);
+    }
+
     info!("done! cpu: {}", game::cpu::get_used())
 }
 
