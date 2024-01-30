@@ -14,7 +14,9 @@ use screeps::{
 use wasm_bindgen::{prelude::*, JsCast};
 
 mod logging;
-mod room_visuals;
+mod visuals;
+mod room;
+mod empire;
 
 thread_local! {
     static CREEP_TARGETS: RefCell<HashMap<String, CreepTarget>> = RefCell::new(HashMap::new());
@@ -33,25 +35,23 @@ pub fn game_loop() {
     INIT_LOGGING.call_once(|| {
         logging::setup_logging(logging::Debug);
     });
-    debug!("Loop starting! CPU: {}", game::cpu::get_used());
+    // debug!("Loop starting! CPU: {}", game::cpu::get_used());
 
-    CREEP_TARGETS.with(|creep_targets_refcell| {
-        let mut creep_targets = creep_targets_refcell.borrow_mut();
-        debug!("running creeps");
-        for creep in game::creeps().values() {
-            run_creep(&creep, &mut creep_targets);
-        }
-    });
+    empire::empire_runner::run_empire();
+
+    // CREEP_TARGETS.with(|creep_targets_refcell| {
+    //     let mut creep_targets = creep_targets_refcell.borrow_mut();
+    //     debug!("running creeps");
+    //     for creep in game::creeps().values() {
+    //         run_creep(&creep, &mut creep_targets);
+    //     }
+    // });
 
     if game::time() % 1000 == 0 {
       clean_memory()
     }
 
-    for room in game::rooms().values() {
-        room_visuals::draw_room(&room);
-    }
-
-    info!("done! cpu: {}", game::cpu::get_used())
+    // info!("done! cpu: {}", game::cpu::get_used())
 }
 
 fn clean_memory() {
