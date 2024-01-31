@@ -13,5 +13,8 @@ pub fn run_spawning(room: &mut Room) {
 }
 
 pub fn run_spawn(spawn: &StructureSpawn) {
+  if let Some(_) = spawn.spawning() {
+    return ()
+  }
   log::debug!("Running spawn for {}", spawn.name());
 }
