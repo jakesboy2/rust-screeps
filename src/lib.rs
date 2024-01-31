@@ -17,6 +17,7 @@ mod logging;
 mod visuals;
 mod room;
 mod empire;
+mod job;
 
 thread_local! {
     static CREEP_TARGETS: RefCell<HashMap<String, CreepTarget>> = RefCell::new(HashMap::new());
