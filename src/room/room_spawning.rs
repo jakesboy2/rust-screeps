@@ -5,7 +5,7 @@ use screeps::{
   StructureSpawn
 };
 
-pub fn run_spawning(room: &mut Room) {
+pub fn run_spawning(room: &Room) {
   log::debug!("Running spawns for room {}", room.name());
   for spawn in game::spawns().values() {
     run_spawn(&spawn);

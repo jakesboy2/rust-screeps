@@ -13,14 +13,15 @@ use screeps::{
 };
 use wasm_bindgen::{prelude::*, JsCast};
 
-mod logging;
-mod visuals;
-mod room;
-mod empire;
-mod job;
+pub mod logging;
+pub mod visuals;
+pub mod room;
+pub mod empire;
+pub mod job;
+pub mod memory;
 
 thread_local! {
-    static CREEP_TARGETS: RefCell<HashMap<String, CreepTarget>> = RefCell::new(HashMap::new());
+    pub static CREEP_TARGETS: RefCell<HashMap<String, CreepTarget>> = RefCell::new(HashMap::new());
 }
 
 static INIT_LOGGING: std::sync::Once = std::sync::Once::new();
