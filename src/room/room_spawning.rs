@@ -1,13 +1,8 @@
 
 use screeps::{
-  game,
-  Room,
-  StructureSpawn,
-  constants::Part,
-  SpawnOptions
+  constants::Part, game, Room, SpawnOptions, StructureSpawn
 };
-use wasm_bindgen::JsValue;
-use js_sys::Object;
+use log::*;
 
 use crate::memory::memory_manager::{CreepMemory, CreepRole};
 
@@ -33,11 +28,16 @@ pub fn run_spawn(spawn: &StructureSpawn) {
     let body = get_creep_body(role);
     let creep_memory = get_creep_options(role);
     let mut options = SpawnOptions::default();
-    // need to figure out mem here
-    // probably move this all into get_creep_options to hide it away
-    options = SpawnOptions::memory(options, mem);
-
-    spawn.spawn_creep_with_options(body, name, opts);
+    
+    let mem = serde_wasm_bindgen::to_value(&creep_memory);
+    if let Ok(spawn_options_memory) = mem {
+      options = SpawnOptions::memory(options, spawn_options_memory);
+      log::debug!("Spawning {}", name);
+      let result = spawn.spawn_creep_with_options(body, name, &options);
+      if let Err(error_code) = result {
+        log::debug!("Error spawning {}, error code: {:?}", name, error_code)
+      }
+    }
   }
 }
 
@@ -54,6 +54,6 @@ fn get_creep_body(role: &CreepRole) -> &[Part] {
 // Use some form of strat pattern to grab these from a harvester implementation
 fn get_creep_options(role: &CreepRole) -> CreepMemory {
   CreepMemory {
-    role: *role.clone()
+    role: role.clone()
   }
 }
