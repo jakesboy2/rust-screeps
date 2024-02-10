@@ -4,7 +4,7 @@ use screeps::{
   constants::Part, game, Room, SpawnOptions, StructureSpawn
 };
 
-use crate::memory::memory_manager::{CreepMemory, CreepRole};
+use crate::memory::memory_definitions::{CreepMemory, CreepRole};
 use crate::creep::creep_lib::get_cost_for_body;
 use crate::room::room_lib::get_creep_count;
 

@@ -1,6 +1,6 @@
 use screeps::{game, Creep, Room};
 
-use crate::memory::memory_manager::{get_creep_memory, CreepRole};
+use crate::memory::{memory_definitions::CreepRole, memory_lib::get_creep_memory};
 
 pub fn get_creeps_in_room(room: &Room) -> Vec<Creep> {
   let creeps_in_room = game::creeps().values().filter(|creep| {
