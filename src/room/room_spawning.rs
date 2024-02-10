@@ -6,6 +6,7 @@ use screeps::{
 
 use crate::memory::memory_manager::{CreepMemory, CreepRole};
 use crate::creep::creep_lib::get_cost_for_body;
+use crate::room::room_lib::get_creep_count;
 
 pub fn run_spawning(room: &Room) {
   log::debug!("Running spawns for room {}", room.name());
@@ -57,7 +58,9 @@ fn get_creep_name(role: &CreepRole) -> String {
 
 // Use some form of strat pattern to grab these from a harvester implementation
 fn get_creep_body(role: &CreepRole) -> &[Part] {
-  &[Part::Work, Part::Carry, Part::Carry, Part::Move, Part::Move]
+  match role {
+    CreepRole::Harvester => &[Part::Work, Part::Carry, Part::Carry, Part::Move, Part::Move]
+  }
 }
 
 // Use some form of strat pattern to grab these from a harvester implementation
@@ -68,8 +71,7 @@ fn get_creep_options(role: &CreepRole) -> CreepMemory {
 }
 
 fn get_creep_role_to_spawn(room: &Room) -> Option<CreepRole> {
-  // todo implement creep count fn
-  let harvester_count = 0;
+  let harvester_count = get_creep_count(room, &CreepRole::Harvester);
   let max_harvesters = 2;
 
   if max_harvesters > harvester_count {
