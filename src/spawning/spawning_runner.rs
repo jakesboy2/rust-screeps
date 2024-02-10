@@ -1,12 +1,13 @@
 
 use screeps::ResourceType;
 use screeps::{
-  constants::Part, game, Room, SpawnOptions, StructureSpawn
+  game, Room, SpawnOptions, StructureSpawn
 };
 
-use crate::memory::memory_definitions::{CreepMemory, CreepRole};
+use crate::memory::memory_definitions::CreepRole;
 use crate::creep::creep_lib::get_cost_for_body;
 use crate::room::room_lib::get_creep_count;
+use crate::spawning::spawning_lib::{get_creep_body, get_creep_name, get_creep_options};
 
 pub fn run_spawning(room: &Room) {
   log::debug!("Running spawns for room {}", room.name());
@@ -48,26 +49,6 @@ pub fn run_spawn(spawn: &StructureSpawn, room: &Room) {
     if let Err(error_code) = result {
       log::debug!("Error spawning {}, error code: {:?}", name, error_code)
     }
-  }
-}
-
-// Use some form of strat pattern to grab these from a harvester implementation
-fn get_creep_name(role: &CreepRole) -> String {
-  return game::time().to_string() + &role.to_string();
-}
-
-// Use some form of strat pattern to grab these from a harvester implementation
-fn get_creep_body(role: &CreepRole) -> &[Part] {
-  match role {
-    CreepRole::Harvester => &[Part::Work, Part::Carry, Part::Carry, Part::Move, Part::Move]
-  }
-}
-
-// Use some form of strat pattern to grab these from a harvester implementation
-fn get_creep_options(room: &Room, role: &CreepRole) -> CreepMemory {
-  CreepMemory {
-    role: role.clone(),
-    home_room: room.name().to_string()
   }
 }
 

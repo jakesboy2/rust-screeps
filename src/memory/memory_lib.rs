@@ -3,8 +3,6 @@ use wasm_bindgen::UnwrapThrowExt;
 
 use super::memory_definitions::{CreepMemory, RoomMemory};
 
-
-
 pub fn get_creep_memory(creep: &Creep) -> CreepMemory {
   let creep_memory = serde_wasm_bindgen::from_value(creep.memory()).unwrap_throw();
   creep_memory

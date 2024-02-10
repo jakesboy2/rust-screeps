@@ -11,6 +11,7 @@ pub mod room;
 pub mod empire;
 pub mod creep;
 pub mod memory;
+pub mod spawning;
 
 static INIT_LOGGING: std::sync::Once = std::sync::Once::new();
 
