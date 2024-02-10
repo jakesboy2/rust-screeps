@@ -9,6 +9,7 @@ pub mod logging;
 pub mod visuals;
 pub mod room;
 pub mod empire;
+pub mod creep;
 pub mod memory;
 
 static INIT_LOGGING: std::sync::Once = std::sync::Once::new();
