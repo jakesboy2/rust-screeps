@@ -36,7 +36,7 @@ pub fn run_spawn(spawn: &StructureSpawn, room: &Room) {
   }
   
   let name = get_creep_name(role_to_spawn);
-  let creep_memory = get_creep_options(role_to_spawn);
+  let creep_memory = get_creep_options(room, role_to_spawn);
   let mut options = SpawnOptions::default();
   let mem = serde_wasm_bindgen::to_value(&creep_memory);
 
@@ -64,9 +64,10 @@ fn get_creep_body(role: &CreepRole) -> &[Part] {
 }
 
 // Use some form of strat pattern to grab these from a harvester implementation
-fn get_creep_options(role: &CreepRole) -> CreepMemory {
+fn get_creep_options(room: &Room, role: &CreepRole) -> CreepMemory {
   CreepMemory {
-    role: role.clone()
+    role: role.clone(),
+    home_room: room.name().to_string()
   }
 }
 
