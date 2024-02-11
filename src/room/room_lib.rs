@@ -1,5 +1,5 @@
 use screeps::{game, Creep, Room};
-use std::{borrow::Borrow, cell::RefCell, collections::HashMap};
+use std::{cell::RefCell, collections::HashMap};
 
 use crate::memory::{memory_definitions::CreepRole, memory_lib::get_creep_memory};
 
