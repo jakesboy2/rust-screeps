@@ -13,7 +13,8 @@ pub fn get_creep_name(role: &CreepRole) -> String {
 // Use some form of strat pattern to grab these from a harvester implementation
 pub fn get_creep_body(role: &CreepRole) -> &[Part] {
   match role {
-    CreepRole::Harvester => &[Part::Work, Part::Carry, Part::Carry, Part::Move, Part::Move]
+    CreepRole::Harvester => &[Part::Work, Part::Carry, Part::Carry, Part::Move, Part::Move],
+    CreepRole::Worker => &[Part::Work, Part::Carry, Part::Carry, Part::Move, Part::Move]
   }
 }
 

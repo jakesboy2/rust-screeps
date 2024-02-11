@@ -60,5 +60,12 @@ fn get_creep_role_to_spawn(room: &Room) -> Option<CreepRole> {
     return Some(CreepRole::Harvester);
   }
 
+  let worker_count = get_creep_count(room, &CreepRole::Worker);
+  let max_workers= 2;
+
+  if max_workers > worker_count {
+    return Some(CreepRole::Worker);
+  }
+
   None
 }

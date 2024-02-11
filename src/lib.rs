@@ -5,6 +5,8 @@ use log::*;
 use screeps::game;
 use wasm_bindgen::{prelude::*, JsCast};
 
+use crate::empire::empire_lib::setup_shared_memory;
+
 pub mod logging;
 pub mod visuals;
 pub mod room;
@@ -21,13 +23,12 @@ pub fn game_loop() {
         logging::setup_logging(logging::Debug);
     });
 
+    setup_shared_memory();
     empire::empire_runner::run_empire();
 
     if game::time() % 1000 == 0 {
       clean_creep_memory();
     }
-
-  info!("done! cpu: {}", game::cpu::get_used())
 }
 
 fn clean_creep_memory() {

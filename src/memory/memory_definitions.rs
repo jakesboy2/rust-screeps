@@ -11,15 +11,17 @@ pub struct RoomMemory {
   pub room_state: RoomState
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Hash, Eq, Debug)]
 pub enum CreepRole {
-  Harvester
+  Harvester,
+  Worker
 }
 
 impl ToString for CreepRole {
   fn to_string(&self) -> String {
     match self {
-      Self::Harvester => "harvester".to_string()
+      Self::Harvester => "harvester".to_string(),
+      Self::Worker => "worker".to_string()
     }
   }
 }
