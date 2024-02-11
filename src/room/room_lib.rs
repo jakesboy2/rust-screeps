@@ -37,7 +37,7 @@ pub fn get_creep_count(room: &Room, role: &CreepRole) -> u32 {
 
     let creep_counts = all_creep_counts.get(&room.name().to_string());
     if creep_counts.is_none() {
-      log::error!("");
+      log::error!("CREEP_COUNT not defined for room {}", &room.name().to_string());
       return u32::MAX;
     }
   
