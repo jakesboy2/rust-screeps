@@ -1,5 +1,5 @@
 use screeps::{game, Creep, Room};
-use std::{cell::RefCell, collections::HashMap};
+use std::{borrow::Borrow, cell::RefCell, collections::HashMap};
 
 use crate::memory::{memory_definitions::CreepRole, memory_lib::get_creep_memory};
 
@@ -19,6 +19,7 @@ pub fn setup_creep_counts() {
 fn get_creep_counts_as_hash(room: &Room) -> HashMap<CreepRole, u32> {
   let creeps_in_room = get_creeps_in_room(room);
   let mut creep_count: HashMap<CreepRole, u32> = HashMap::new();
+
   for creep in creeps_in_room {
     let creep_memory = get_creep_memory(&creep);
 
@@ -31,20 +32,21 @@ fn get_creep_counts_as_hash(room: &Room) -> HashMap<CreepRole, u32> {
 }
 
 pub fn get_creep_count(room: &Room, role: &CreepRole) -> u32 {
-  let all_creep_counts = CREEP_COUNTS.take();
-  let creep_counts = all_creep_counts.get(&room.name().to_string());
-  if creep_counts.is_none() {
-    log::error!("Creep count not defined for room {}", room.name().to_string());
-  }
+  CREEP_COUNTS.with(|creep_count_refcell| {
+    let all_creep_counts = creep_count_refcell.borrow();
 
-  let creep_count = creep_counts.unwrap().get(role);
-  match creep_count {
-    Some(value) => return *value,
-    None => {
-      log::error!("No creep count found for {} in room {}", role.to_string(), &room.name().to_string());
-      return 0;
+    let creep_counts = all_creep_counts.get(&room.name().to_string());
+    if creep_counts.is_none() {
+      log::error!("");
+      return u32::MAX;
     }
-  }
+  
+    let creep_count = creep_counts.unwrap().get(role);
+    match creep_count {
+      Some(value) => return *value,
+      None => return 0
+    }
+  })
 }
 
 pub fn get_creeps_in_room(room: &Room) -> Vec<Creep> {
