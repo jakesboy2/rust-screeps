@@ -1,7 +1,7 @@
 use screeps::{game, Creep, Room};
 use std::{cell::RefCell, collections::HashMap};
 
-use crate::memory::{memory_definitions::CreepRole, memory_lib::get_creep_memory};
+use crate::{empire::empire_lib::get_owned_rooms, memory::{memory_definitions::CreepRole, memory_lib::get_creep_memory}};
 
 thread_local! {
   static CREEP_COUNTS: RefCell<HashMap<String, HashMap<CreepRole, u32>>> = RefCell::new(HashMap::new())
@@ -10,7 +10,8 @@ thread_local! {
 pub fn setup_creep_counts() {
   CREEP_COUNTS.with(|creep_count_refcell| {
     let mut creep_counts = creep_count_refcell.borrow_mut();
-    for room in game::rooms().values() {
+    let rooms = get_owned_rooms();
+    for room in rooms {
       creep_counts.insert(room.name().to_string(), get_creep_counts_as_hash(&room));
     }
   });

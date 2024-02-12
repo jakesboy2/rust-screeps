@@ -1,12 +1,12 @@
-use screeps::{game, Room};
+use screeps::Room;
 
 use log::*;
 
-use crate::{spawning::spawning_runner, visuals::room_visuals};
+use crate::{empire::empire_lib::get_owned_rooms, spawning::spawning_runner, visuals::room_visuals};
 
 pub fn run_rooms() {
-  let rooms = game::rooms();
-  for mut room in rooms.values() {
+  let rooms = get_owned_rooms();
+  for mut room in rooms {
     run_room(&mut room);
   }
 }
