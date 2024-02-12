@@ -1,11 +1,6 @@
-use screeps::game;
-
-use crate::room::room_runner;
+use crate::{creep::creep_runner::run_creeps, room::room_runner::run_rooms};
 
 pub fn run_empire() {
-  
-  let rooms = game::rooms();
-  for mut room in rooms.values() {
-    room_runner::run_room(&mut room);
-  }
+  run_rooms();
+  run_creeps();
 }

@@ -1,12 +1,18 @@
-use screeps::Room;
+use screeps::{game, Room};
 
 use log::*;
 
 use crate::{spawning::spawning_runner, visuals::room_visuals};
 
-pub fn run_room(room: &mut Room) {
+pub fn run_rooms() {
+  let rooms = game::rooms();
+  for mut room in rooms.values() {
+    run_room(&mut room);
+  }
+}
 
-  debug!("Running room {}", room.name().to_array_string() );  
+fn run_room(room: &mut Room) {
+  debug!("Running room {}", room.name().to_array_string());  
   spawning_runner::run_spawning(&room);    
   room_visuals::draw_room(&room);
 }
