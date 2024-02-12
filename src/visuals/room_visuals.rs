@@ -6,6 +6,10 @@ use screeps::{
 };
 
 pub fn draw_room(room: &Room) {
+  draw_source_energy_count(room);
+}
+
+fn draw_source_energy_count(room: &Room) {
   let room_visual = room.visual();
   let sources = room.find(SOURCES, Option::None);
   for source in sources {
@@ -17,5 +21,5 @@ pub fn draw_room(room: &Room) {
       format!("{} / {}", source.energy(), source.energy_capacity()).into(),
       Some(TextStyle::default())
     );
-  }
+  } 
 }
