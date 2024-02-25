@@ -26,9 +26,9 @@ pub fn run_creep(creep: &Creep) {
   // probably the same idea for the memory/name stuff
 }
 
-fn get_creep_strategy(creep_role: &CreepRole) -> impl CreepStrategy {
+fn get_creep_strategy(creep_role: &CreepRole) -> Box<dyn CreepStrategy> {
   match creep_role {
-    CreepRole::Harvester => Harvester::default(),
-    CreepRole::Worker => Worker::default(),
+    CreepRole::Harvester => Box::new(Harvester::default()),
+    CreepRole::Worker => Box::new(Worker::default()),
   }
 }
