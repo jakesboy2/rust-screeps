@@ -11,7 +11,7 @@ pub fn get_owned_rooms() -> Vec<Room> {
     if let Some(controller) = room.controller() {
       return controller.my() == true;
     }
-    return false
+    false
   }).collect();
   
   rooms

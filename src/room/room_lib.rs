@@ -44,8 +44,8 @@ pub fn get_creep_count(room: &Room, role: &CreepRole) -> u32 {
   
     let creep_count = creep_counts.unwrap().get(role);
     match creep_count {
-      Some(value) => return *value,
-      None => return 0
+      Some(value) => *value,
+      None => 0
     }
   })
 }
@@ -53,7 +53,7 @@ pub fn get_creep_count(room: &Room, role: &CreepRole) -> u32 {
 pub fn get_creeps_in_room(room: &Room) -> Vec<Creep> {
   let creeps_in_room = game::creeps().values().filter(|creep| {
     let creep_memory = get_creep_memory(creep);
-    return creep_memory.home_room == room.name().to_string()
+    creep_memory.home_room == room.name().to_string()
   });
 
   let return_val: Vec::<Creep> = creeps_in_room.collect();
